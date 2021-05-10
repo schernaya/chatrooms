@@ -46,25 +46,10 @@ export default {
     };
   },
   methods: {
-    async LoginUser1() {
-      if (this.login.length === 0 || this.password.length === 0) {
-        this.error = true;
-      } else {
-        const user = await this.CheckUser();
-        if (user) {
-          const token = await this.GetToken();
-          if (token) {
-            await onLogin(this.$apollo.provider.defaultClient, token);
-            this.error = false;
-            this.$router.push("/chats");
-          }
-          this.error = true;
-        } else {
-          this.error = true;
-        }
-      }
+    async RegisterUser() {
+      this.$router.push("/registration");
     },
-
+    
     async LoginUser() {
       if (this.login.length === 0 || this.password.length === 0) {
         this.error = true;
