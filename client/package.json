@@ -48,14 +48,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "graphql/template-strings": [
-        "error",
-        {
-          "env": "literal",
-          "projectName": "app",
-          "schemaJsonFilepath": "node_modules/.temp/graphql/schema.json"
-        }
-      ]
+      "no-used-vars": "off",
+      "no-empty": "off"
     },
     "plugins": [
       "graphql"

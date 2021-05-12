@@ -54,6 +54,10 @@ export default {
   background-color: #3d5a80;
 }
 
+.logout:hover {
+  background-color: #314764;
+}
+
 .logout_btn {
   text-decoration: none;
   text-align: center;
