@@ -2,6 +2,7 @@
   <div id="chat">
     <Header />
     <div class="blocks">
+      <div class="buttons__block"></div>
       <div class="center__block">
         <div class="main__block">
           <div class="head__block">
@@ -29,13 +30,13 @@
           </div>
         </div>
       </div>
-      <!-- <div class="members__block">
+      <div class="members__block">
         <ChatData
           v-bind:members="members"
           v-bind:owner="owner"
           :user_id="me.id"
         />
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -43,7 +44,7 @@
 <script>
 import Header from "./Header.vue";
 import Messages from "./Messages.vue";
-// import ChatData from "./ChatData.vue";
+import ChatData from "./ChatData.vue";
 import { USER_INFO, CREATE_MESSAGE, LEAVE_ROOM } from "@/graphql/graphql.js";
 
 export default {
@@ -64,7 +65,7 @@ export default {
   components: {
     Header,
     Messages,
-    // ChatData,
+    ChatData,
     // ChatElement,
   },
   async created() {
@@ -75,7 +76,8 @@ export default {
     this.me = me.data.me;
     this.room = me.data.me.currentRoom;
     this.messages = this.room.lastMessages;
-    console.log(this.messages);
+    this.members = this.room.members;
+    this.owner = this.room.owner;
   },
   methods: {
     async SendMessage() {
@@ -103,6 +105,33 @@ export default {
 </script>
 
 <style scoped>
+.blocks {
+  display: flex;
+}
+
+.buttons__block {
+  width: 100%;
+  float: left;
+}
+
+.main__block {
+  margin-right: auto;
+  float: center;
+}
+
+.members__block {
+  float: right;
+  margin-top: 90px;
+  margin-left: 60px;
+  margin-right: 60px;
+  width: 100%;
+  height: 600px;
+}
+
+.center__block {
+  float: center;
+  width: 100%;
+}
 
 .main__block,
 .input-message__wrap {
@@ -156,7 +185,6 @@ export default {
   grid-area: messages__list;
   width: 670px;
   height: 650px;
-  /* border: black 1px solid; */
   margin: auto;
 }
 
@@ -174,6 +202,7 @@ export default {
 .form_control {
   width: 640px;
 }
+
 .input-message {
   /* margin-left: 10px; */
   justify-content: center;

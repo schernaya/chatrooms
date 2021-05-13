@@ -1,6 +1,6 @@
 <template>
   <div class="chat-list-element" @click="$emit('join-chat', chat_id)">
-    <div class="info" v-bind:style= "[user_id === owner_id ? {'background-color': 'rgb(220, 220, 220)'} : {'background-color': 'white'}]">
+    <div class="info" v-bind:style= "[user_id === owner_id ? {'background-color': 'lavender'} : {'background-color': 'white'}]">
       <div class="chat__logo">
         {{ chatLetter }}
       </div>

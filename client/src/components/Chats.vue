@@ -15,7 +15,6 @@
           <input class="create_btn btn" type="submit" value="Create" />
         </form>
       </div>
-      <CreateRoomModal v-show="isModalVisible" @close="closeModal" />
       <div class="chat__list">
         <div v-for="room in rooms" :key="room.id">
           <ChatElement
@@ -30,6 +29,7 @@
           />
         </div>
       </div>
+      <CreateRoomModal v-show="isModalVisible" @close="closeModal" />
     </div>
   </div>
 </template>
@@ -92,9 +92,6 @@ export default {
         },
       });
       this.$router.push("/chat");
-      // this.$emit("chat-clicked", {
-      //   data: chat_info.data,
-      // });
     },
   },
 };

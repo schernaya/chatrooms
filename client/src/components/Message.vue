@@ -27,11 +27,9 @@ export default {
 <style scoped>
 .author {
   display: flex;
-  /* border: 2px solid rgb(137, 137, 137); */
 }
 
 .name-time-message__block {
-  /* border: 2px solid rgb(29, 29, 29); */
   display: flex;
   width: 88%;
   margin-right: auto;
@@ -51,9 +49,6 @@ export default {
   font-size: 22px;
   margin-left: 18px;
   margin-top: 40px;
-  /* bottom: 0; */
-  /* margin-top: 100px; */
-  /* border: 2px solid rgb(112, 42, 42); */
   width: 100%;
   position: absolute;
 }
@@ -67,29 +62,23 @@ export default {
 .author__name {
   margin-left: 13px;
   color: #3d5a80;
-  /* border: 2px solid rgb(137, 137, 137); */
 }
 
 .time {
   color: black;
   margin-left: auto;
-  /* border: 2px solid rgb(137, 137, 137); */
 }
 
 .mess_wrap {
-  /* width: inherit; */
-  /* display: grid; */
   justify-content: left;
   margin-left: 10px;
   height: 110px;
-  /* border: 2px solid rgb(29, 29, 29); */
 }
 
 .author__logo {
   font-size: 22px;
   background-color: black;
   color: white;
-  /* margin-left: 10px; */
   margin-top: 1px;
   width: 55px;
   height: 55px;
@@ -106,9 +95,7 @@ export default {
 }
 
 .mess_wrap .message {
-  /* border: 2px solid rgb(29, 29, 29); */
   margin-bottom: 5px;
-  /* overflow-wrap: anywhere; */
   width: 614px;
   padding: 10px;
   height: 80px;
@@ -116,8 +103,5 @@ export default {
 
 .mess_wrap.own_message .message {
   background-color: lavender;
-  /* margin-top: 20px; */
-  /* bottom: 0; */
-  /* border: 2px solid rgb(29, 29, 29); */
 }
 </style>
