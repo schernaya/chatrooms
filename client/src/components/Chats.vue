@@ -42,7 +42,9 @@ import {
   JOIN_ROOM,
   GET_ROOMS,
   USER_INFO,
-  // SUB_ROOM_CREATED,
+  SUB_ROOM_CREATED,
+  SUB_ROOM_DELETED,
+  SUB_ROOM_UPDATED,
 } from "@/graphql/graphql.js";
 
 export default {
@@ -59,6 +61,47 @@ export default {
     Header,
     ChatElement,
     CreateRoomModal,
+  },
+  apollo: {
+    $subscribe: {
+      create_rooms: {
+        query: SUB_ROOM_CREATED,
+        result({ data }) {
+          this.rooms.push(data.roomCreated);
+        },
+      },
+      delete_room: {
+        query: SUB_ROOM_DELETED,
+        async result({ data }) {
+          let right_index = -1;
+          this.rooms.forEach((item, index) =>
+            item.id === data.roomDeleted.id ? (right_index = index) : ""
+          );
+          this.rooms.splice(right_index, 1);
+          const me = await this.$apollo.query({
+            fetchPolicy: "no-cache",
+            query: USER_INFO,
+          });
+          if (!me.data.me.currentRoom) {
+            this.display_chat = false;
+            this.display_list = true;
+          }
+        },
+      },
+      rename_room: {
+        query: SUB_ROOM_UPDATED,
+        result({ data }) {
+          if (data.roomUpdated.owner.id === this.me.id) {
+            this.current_room_name = data.roomUpdated.name;
+          }
+          const new_rooms = this.rooms.map((item) => {
+            item.id === data.roomUpdated.id ? (item = data.roomUpdated) : item;
+            return item;
+          });
+          this.rooms = new_rooms;
+        },
+      },
+    }
   },
   async created() {
     const me = await this.$apollo.query({

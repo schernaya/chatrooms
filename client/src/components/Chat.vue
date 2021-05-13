@@ -45,7 +45,13 @@
 import Header from "./Header.vue";
 import Messages from "./Messages.vue";
 import ChatData from "./ChatData.vue";
-import { USER_INFO, CREATE_MESSAGE, LEAVE_ROOM } from "@/graphql/graphql.js";
+import {
+  USER_INFO,
+  CREATE_MESSAGE,
+  LEAVE_ROOM,
+  SUB_MEMBER_JOINED,
+  SUB_MEMBER_LEFT,
+} from "@/graphql/graphql.js";
 
 export default {
   name: "Chats",
@@ -78,6 +84,26 @@ export default {
     this.messages = this.room.lastMessages;
     this.members = this.room.members;
     this.owner = this.room.owner;
+  },
+  apollo: {
+    $subscribe: {
+      joined_room: {
+        query: SUB_MEMBER_JOINED,
+        result({ data }) {
+          this.members.push(data.memberJoined);
+        },
+      },
+      left_room: {
+        query: SUB_MEMBER_LEFT,
+        result({ data }) {
+          let right_index = -1;
+          this.members.forEach((item, index) =>
+            item.id === data.memberLeft.id ? (right_index = index) : ""
+          );
+          this.members.splice(right_index, 1);
+        },
+      },
+    },
   },
   methods: {
     async SendMessage() {
