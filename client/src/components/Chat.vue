@@ -17,7 +17,13 @@
         <div class="main__block">
           <div class="head__block">
             <div class="title__block">
-              <div class="chat__title">{{ room_name }}</div>
+              <div
+                ref="chat__title"
+                :class="width_box <= width_box_text ? 'animate' : ''">{{ room_name }}</div
+              >
+              <div class="fader fader-left"></div>
+              <div class="fader fader-right"></div>
+              <!-- <div class="chat_title">{{ room_name }}</div> -->
             </div>
             <form class="left_form" @submit.prevent="LeftRoom">
               <input class="left_btn btn" type="submit" value="Left room" />
@@ -88,6 +94,8 @@ export default {
       display_owner_buttons: false,
       message_text: "",
       isModalVisible: false,
+      width_box: 0,
+      width_box_text: 516,
     };
   },
   components: {
@@ -110,6 +118,12 @@ export default {
     this.room_name = this.room.name;
     if (this.me.id == this.owner.id) {
       this.display_owner_buttons = true;
+    }
+      this.width_box_text = this.$refs.chat__title.clientWidth;
+  },
+  async updated() {
+    if (this.$refs.chat__title) {
+      this.width_box_text = this.$refs.chat__title.clientWidth;
     }
   },
   apollo: {
@@ -272,20 +286,19 @@ export default {
 }
 
 .title__block {
-  margin-right: 1.5em;
+  padding-left: 15px;
+  margin-right: 15px;
+  /* margin-top: 6px; */
   width: 516px;
-  height: 64px;
   border: 2px solid rgb(137, 137, 137);
-  margin-bottom: 1.5em;
-  text-align: center;
-}
-
-.chat__title {
-  transform: translate3d(0, -6px, 0);
+  white-space: nowrap;
+  overflow: hidden;
   font-size: 48px;
+  height: 64px;
+  margin-bottom: 15px;
 }
 
-.chat__title,
+.title__block,
 .btn,
 .form_control,
 .left__btn {
@@ -344,5 +357,55 @@ export default {
   margin: auto;
   border: 2px solid rgb(137, 137, 137);
   padding: 15px;
+}
+
+.title__block div {
+  display: inline-block;
+}
+
+.title__block .animate:hover {
+  position: relative;
+  animation: leftright 10s infinite alternate linear;
+}
+@keyframes leftright {
+  0%,
+  20% {
+    transform: translateX(0%);
+    left: 0%;
+  }
+  20%,
+  40% {
+    transform: translateX(-40%);
+    left: 40%;
+  }
+  40%,
+  60% {
+    transform: translateX(-60%);
+    left: 60%;
+  }
+  60%,
+  80% {
+    transform: translateX(-80%);
+    left: 80%;
+  }
+  80%,
+  100% {
+    transform: translateX(-100%);
+    left: 100%;
+  }
+}
+
+.fader {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 25px;
+}
+.fader.fader-left {
+  left: 0;
+}
+
+.fader.fader-right {
+  right: 0;
 }
 </style>
