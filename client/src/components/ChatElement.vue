@@ -5,6 +5,7 @@
         {{ chatLetter }}
       </div>
       <p class="chat__name">{{ chat_name }}</p>
+      <!-- <p  v-if="[user_id === owner_id]" class="chat__delete"> DELETE </p> -->
     </div>
   </div>
 </template>
@@ -72,5 +73,9 @@ export default {
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+}
+
+.chat__delete {
+  margin-left: 80px;
 }
 </style>

@@ -45,7 +45,7 @@ export default {
 }
 
 .title-members {
-  margin-top: 35px;
+  margin-top: 45px;
 }
 
 .chat_members {

@@ -2,12 +2,31 @@
   <div id="chat">
     <Header />
     <div class="blocks">
-      <div class="buttons__block"></div>
+      <div class="buttons__block">
+        <form
+          class="button_form"
+          v-if="display_owner_buttons"
+          @submit.prevent="RenameRoomModal"
+        >
+          <div class="form_btn">
+            <button class="rename_btn left__btn">Rename</button>
+          </div>
+        </form>
+        <form
+          class="button_form"
+          v-if="display_owner_buttons"
+          @submit.prevent="DeleteRoom"
+        >
+          <div class="form_btn">
+            <button class="delete_btn left__btn">Delete</button>
+          </div>
+        </form>
+      </div>
       <div class="center__block">
         <div class="main__block">
           <div class="head__block">
             <div class="title__block">
-              <div class="chat__title">{{ room.name }}</div>
+              <div class="chat__title">{{ room_name }}</div>
             </div>
             <form class="left_form" @submit.prevent="LeftRoom">
               <input class="left_btn btn" type="submit" value="Left room" />
@@ -38,6 +57,11 @@
         />
       </div>
     </div>
+    <RenameRoomModal
+      v-show="isModalVisible"
+      @close="closeModal"
+      :room_name="room_name"
+    />
   </div>
 </template>
 
@@ -45,12 +69,18 @@
 import Header from "./Header.vue";
 import Messages from "./Messages.vue";
 import ChatData from "./ChatData.vue";
+import RenameRoomModal from "./RenameRoomModal.vue";
+
 import {
   USER_INFO,
   CREATE_MESSAGE,
   LEAVE_ROOM,
   SUB_MEMBER_JOINED,
   SUB_MEMBER_LEFT,
+  DELETE_ROOM,
+  SUB_ROOM_UPDATED,
+  SUB_ROOM_DELETED,
+  SUB_ROOM_CREATED,
 } from "@/graphql/graphql.js";
 
 export default {
@@ -66,12 +96,14 @@ export default {
       me: {},
       display_owner_buttons: false,
       message_text: "",
+      isModalVisible: false,
     };
   },
   components: {
     Header,
     Messages,
     ChatData,
+    RenameRoomModal,
     // ChatElement,
   },
   async created() {
@@ -84,6 +116,10 @@ export default {
     this.messages = this.room.lastMessages;
     this.members = this.room.members;
     this.owner = this.room.owner;
+    this.room_name = this.room.name;
+    if (this.me.id == this.owner.id) {
+      this.display_owner_buttons = true;
+    }
   },
   apollo: {
     $subscribe: {
@@ -103,6 +139,32 @@ export default {
           this.members.splice(right_index, 1);
         },
       },
+      rename_room: {
+        query: SUB_ROOM_UPDATED,
+        result({ data }) {
+          if (data.roomUpdated.owner.id === this.me.id) {
+            this.room_name = data.roomUpdated.name;
+          }
+          const new_rooms = this.rooms.map((item) => {
+            item.id === data.roomUpdated.id ? (item = data.roomUpdated) : item;
+            return item;
+          });
+          this.rooms = new_rooms;
+        },
+      },
+      create_rooms: {
+        query: SUB_ROOM_CREATED,
+        result({ data }) {
+          this.rooms.push(data.roomCreated);
+        },
+      },
+      delete_chat: {
+        query: SUB_ROOM_DELETED,
+        async result({ data }) {
+          console.log("delete" + data);
+          // this.$router.push("/chats");
+        },
+      },
     },
   },
   methods: {
@@ -117,14 +179,41 @@ export default {
         this.message_text = "";
       }
     },
+
     async LeftRoom() {
       await this.$apollo.mutate({
         mutation: LEAVE_ROOM,
       });
-      this.$router.push("/chats");
-      // this.display_chat = false;
-      // this.display_list = true;
-      // this.display_owner_buttons = false;
+      this.$router.push("/chats").catch(() => {});
+      this.display_owner_buttons = false;
+    },
+
+    async DeleteRoom() {
+      const user_info = await this.$apollo.query({
+        fetchPolicy: "no-cache",
+        query: USER_INFO,
+      });
+      await this.$apollo.mutate({
+        mutation: DELETE_ROOM,
+        variables: {
+          id: user_info.data.me.currentRoom.id,
+        },
+      });
+      this.display_owner_buttons = false;
+      // this.$router.push("/chats").catch(() => {});
+    },
+
+    async RenameRoomModal() {
+      const me = await this.$apollo.query({
+        fetchPolicy: "no-cache",
+        query: USER_INFO,
+      });
+      this.room_name = me.data.me.currentRoom.name;
+      this.isModalVisible = true;
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
     },
   },
 };
@@ -136,8 +225,26 @@ export default {
 }
 
 .buttons__block {
+  margin-top: 90px;
+  margin-left: 100px;
   width: 100%;
   float: left;
+}
+
+.left__btn {
+  text-align: left;
+  padding-left: 25%;
+  width: 351px;
+  height: 61px;
+  background-color: white;
+  font-size: 30px;
+  border: 2px solid rgb(255, 255, 255);
+  margin-bottom: 40px;
+}
+
+.left__btn:hover {
+  border: 2px solid rgb(137, 137, 137);
+  /* background-color: lavender; */
 }
 
 .main__block {
@@ -188,7 +295,8 @@ export default {
 
 .chat__title,
 .btn,
-.form_control {
+.form_control,
+.left__btn {
   font-family: "Playfair Display", serif;
 }
 

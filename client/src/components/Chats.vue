@@ -45,6 +45,7 @@ import {
   SUB_ROOM_CREATED,
   SUB_ROOM_DELETED,
   SUB_ROOM_UPDATED,
+  // LEAVE_ROOM
 } from "@/graphql/graphql.js";
 
 export default {
@@ -64,30 +65,33 @@ export default {
   },
   apollo: {
     $subscribe: {
+      delete_room: {
+        query: SUB_ROOM_DELETED,
+        async result({ data }) {
+          console.log("there" + data);
+          let right_index = -1;
+          this.rooms.forEach((item, index) =>
+            item.id === data.roomDeleted.id ? (right_index = index) : ""
+          );
+          this.rooms.splice(right_index, 1);
+          // const me = await this.$apollo.query({
+          //   fetchPolicy: "no-cache",
+          //   query: USER_INFO,
+          // });
+          // if (!me.data.me.currentRoom) {
+          //   this.display_chat = false;
+          //   this.display_list = true;
+          // }
+        },
+      },
+
       create_rooms: {
         query: SUB_ROOM_CREATED,
         result({ data }) {
           this.rooms.push(data.roomCreated);
         },
       },
-      delete_room: {
-        query: SUB_ROOM_DELETED,
-        async result({ data }) {
-          let right_index = -1;
-          this.rooms.forEach((item, index) =>
-            item.id === data.roomDeleted.id ? (right_index = index) : ""
-          );
-          this.rooms.splice(right_index, 1);
-          const me = await this.$apollo.query({
-            fetchPolicy: "no-cache",
-            query: USER_INFO,
-          });
-          if (!me.data.me.currentRoom) {
-            this.display_chat = false;
-            this.display_list = true;
-          }
-        },
-      },
+
       rename_room: {
         query: SUB_ROOM_UPDATED,
         result({ data }) {
@@ -101,7 +105,8 @@ export default {
           this.rooms = new_rooms;
         },
       },
-    }
+      // },
+    },
   },
   async created() {
     const me = await this.$apollo.query({
@@ -117,6 +122,7 @@ export default {
     });
     this.rooms = rooms.data.rooms;
     this.me = me.data.me;
+    console.log(rooms);
   },
   methods: {
     async showCreateRoomModal() {
