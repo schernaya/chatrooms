@@ -12,15 +12,6 @@
             <button class="rename_btn left__btn">Rename</button>
           </div>
         </form>
-        <form
-          class="button_form"
-          v-if="display_owner_buttons"
-          @submit.prevent="DeleteRoom"
-        >
-          <div class="form_btn">
-            <button class="delete_btn left__btn">Delete</button>
-          </div>
-        </form>
       </div>
       <div class="center__block">
         <div class="main__block">
@@ -243,8 +234,9 @@ export default {
 }
 
 .left__btn:hover {
-  border: 2px solid rgb(137, 137, 137);
-  /* background-color: lavender; */
+  border: 2px solid rgb(0, 0, 0);
+  background-color: lavender;
+  border: 0;
 }
 
 .main__block {
@@ -338,7 +330,6 @@ export default {
 }
 
 .input-message {
-  /* margin-left: 10px; */
   justify-content: center;
   padding-right: 15px;
   margin: auto;
