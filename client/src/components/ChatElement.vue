@@ -1,13 +1,5 @@
 <template>
   <div class="chat-list-element" @click="$emit('join-chat', chat_id)">
-    <!-- <div
-      class="info"
-      v-bind:style="[
-        user_id === owner_id
-          ? { 'background-color': 'lavender' }
-          : { 'background-color': 'white' },
-      ]"
-    > -->
     <div class="info">
       <div class="chat__logo">
         {{ chatLetter }}
@@ -111,13 +103,11 @@ export default {
   width: 20%;
   position: relative;
   border: 2px solid rgb(137, 137, 137);
-  /* border-radius: 30px; */
   margin-top: 6px;
   margin-bottom: 5px;
 }
 
 .form_btn:hover {
-  /* background-color: lavender; */
   background-color: black;
   color: white;
   border: 0;

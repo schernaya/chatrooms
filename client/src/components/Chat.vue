@@ -162,14 +162,7 @@ export default {
         result({ data }) {
           this.rooms.push(data.roomCreated);
         },
-      },
-      delete_chat: {
-        query: SUB_ROOM_DELETED,
-        async result({ data }) {
-          console.log("delete" + data);
-          // this.$router.push("/chats");
-        },
-      },
+      }
     },
   },
   methods: {
@@ -205,7 +198,6 @@ export default {
         },
       });
       this.display_owner_buttons = false;
-      // this.$router.push("/chats").catch(() => {});
     },
 
     async RenameRoomModal() {
@@ -288,7 +280,6 @@ export default {
 .title__block {
   padding-left: 15px;
   margin-right: 15px;
-  /* margin-top: 6px; */
   width: 516px;
   border: 2px solid rgb(137, 137, 137);
   white-space: nowrap;
