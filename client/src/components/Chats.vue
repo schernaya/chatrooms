@@ -38,17 +38,15 @@
 <script>
 import Header from "./Header.vue";
 import ChatElement from "./ChatElement";
-import CreateRoomModal from "./CreateRoomModal.vue";
+import CreateRoomModal from "./modals/CreateRoomModal.vue";
 import {
   JOIN_ROOM,
   GET_ROOMS,
   USER_INFO,
   SUB_ROOM_CREATED,
-  // SUB_ROOM_DELETED,
   SUB_ROOM_UPDATED,
-  // LEAVE_ROOM
+  DELETE_ROOM
 } from "@/graphql/graphql.js";
-import { DELETE_ROOM } from "../graphql/graphql";
 
 export default {
   name: "Chats",
@@ -67,25 +65,6 @@ export default {
   },
   apollo: {
     $subscribe: {
-      // delete_room: {
-      //   query: SUB_ROOM_DELETED,
-      //   async result({ data }) {
-      //     console.log("there" + data);
-      //     let right_index = -1;
-      //     this.rooms.forEach((item, index) =>
-      //       item.id === data.roomDeleted.id ? (right_index = index) : ""
-      //     );
-      //     this.rooms.splice(right_index, 1);
-      //     // const me = await this.$apollo.query({
-      //     //   fetchPolicy: "no-cache",
-      //     //   query: USER_INFO,
-      //     // });
-      //     // if (!me.data.me.currentRoom) {
-      //     //   this.display_chat = false;
-      //     //   this.display_list = true;
-      //     // }
-      //   },
-      // },
 
       create_rooms: {
         query: SUB_ROOM_CREATED,
@@ -107,7 +86,6 @@ export default {
           this.rooms = new_rooms;
         },
       },
-      // },
     },
   },
   async created() {
@@ -117,7 +95,6 @@ export default {
     });
     if (me.data.me.currentRoom) {
       this.$router.push("/chat");
-      // await this.OpenChat(me);
     }
     const rooms = await this.$apollo.query({
       query: GET_ROOMS,
@@ -215,7 +192,6 @@ input {
   grid-area: chat__list;
   width: 670px;
   height: 700px;
-  /* border: black 1px solid; */
   margin: auto;
 }
 

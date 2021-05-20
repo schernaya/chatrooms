@@ -67,8 +67,6 @@ export default {
 
 <style scoped>
 .messages {
-  /* grid-area: messages; */
-  /* overflow-y: auto; */
   height: 90%;
 }
 

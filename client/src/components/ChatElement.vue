@@ -1,28 +1,21 @@
 <template>
-  <div class="chat-list-element" @click="$emit('join-chat', chat_id)">
-    <!-- <div
-      class="info"
-      v-bind:style="[
-        user_id === owner_id
-          ? { 'background-color': 'lavender' }
-          : { 'background-color': 'white' },
-      ]"
-    > -->
+  <div class="chat-list-element">
     <div class="info">
-      <div class="chat__logo">
+      <div class="chat__logo" @click="$emit('join-chat', chat_id)">
         {{ chatLetter }}
       </div>
       <div class="chat__block">
         <div
           class="chat__name"
           v-bind:style="[
-            user_id === owner_id ? { width: '80%' } : { width: '95%' },
+            user_id === owner_id ? { width: '70%' } : { width: '95%' },
           ]"
+          @click="$emit('join-chat', chat_id)"
         >
           {{ chat_name }}
         </div>
-        <div class="form_btn" v-if="user_id === owner_id">
-          <form class="button_form" @click="$emit('delete-chat', chat_id)">
+        <div class="form_btn" v-if="user_id === owner_id" @click="$emit('delete-chat', chat_id)">
+          <form class="button_form">
             <div class="delete_btn left__btn">Delete</div>
           </form>
         </div>
@@ -63,8 +56,9 @@ export default {
 .info {
   margin-right: auto;
   width: 646px;
-  height: 61px;
+  min-height: 61px;
   margin-bottom: 10px;
+  overflow-wrap: break-word;
 }
 
 .chat__block {
@@ -89,17 +83,16 @@ export default {
 }
 
 .chat__name {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 12px 15px 12px 15px;
   float: right;
+  cursor: pointer;
 }
 
 .chat__logo {
   background-color: black;
   color: white;
   margin-top: 1px;
+  margin-left: 15px;
   width: 55px;
   height: 55px;
   border-radius: 50%;
@@ -108,19 +101,19 @@ export default {
 }
 
 .form_btn {
-  width: 20%;
+  width: 120px;
   position: relative;
   border: 2px solid rgb(137, 137, 137);
-  /* border-radius: 30px; */
   margin-top: 6px;
+  height: 50px;
   margin-bottom: 5px;
 }
 
 .form_btn:hover {
-  /* background-color: lavender; */
   background-color: black;
   color: white;
-  border: 0;
+  border: 2px solid black;
+  cursor: pointer;
 }
 
 .button_form {

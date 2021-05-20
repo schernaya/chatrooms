@@ -131,7 +131,6 @@ export default {
 .subtitle {
   color: rgb(123, 123, 123);
   font-size: 24px;
-  /* margin-bottom: 43px; */
 }
 
 .form_input,
