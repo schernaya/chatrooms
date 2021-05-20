@@ -45,7 +45,7 @@ import {
   USER_INFO,
   SUB_ROOM_CREATED,
   SUB_ROOM_UPDATED,
-  DELETE_ROOM,
+  DELETE_ROOM
 } from "@/graphql/graphql.js";
 
 export default {
@@ -65,6 +65,7 @@ export default {
   },
   apollo: {
     $subscribe: {
+
       create_rooms: {
         query: SUB_ROOM_CREATED,
         result({ data }) {
@@ -100,6 +101,7 @@ export default {
     });
     this.rooms = rooms.data.rooms;
     this.me = me.data.me;
+    console.log(rooms);
   },
   methods: {
     async showCreateRoomModal() {
