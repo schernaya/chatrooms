@@ -38,15 +38,15 @@
 <script>
 import Header from "./Header.vue";
 import ChatElement from "./ChatElement";
-import CreateRoomModal from "./CreateRoomModal.vue";
+import CreateRoomModal from "./modals/CreateRoomModal.vue";
 import {
   JOIN_ROOM,
   GET_ROOMS,
   USER_INFO,
   SUB_ROOM_CREATED,
   SUB_ROOM_UPDATED,
+  DELETE_ROOM,
 } from "@/graphql/graphql.js";
-import { DELETE_ROOM } from "../graphql/graphql";
 
 export default {
   name: "Chats",
@@ -100,7 +100,6 @@ export default {
     });
     this.rooms = rooms.data.rooms;
     this.me = me.data.me;
-    console.log(rooms);
   },
   methods: {
     async showCreateRoomModal() {

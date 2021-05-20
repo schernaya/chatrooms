@@ -13,9 +13,9 @@
         >
           {{ chat_name }}
         </div>
-        <div class="form_btn" v-if="user_id === owner_id">
-          <form class="button_form" @click="$emit('delete-chat', chat_id)">
-            <div class="delete_btn left__btn">Delete</div>
+        <div class="delete__btn" v-if="user_id === owner_id">
+          <form class="form-delete__btn" @click="$emit('delete-chat', chat_id)">
+            <div class="title-delete_btn left__btn">Delete</div>
           </form>
         </div>
       </div>
@@ -81,10 +81,7 @@ export default {
 }
 
 .chat__name {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 12px 15px 12px 15px;
   float: right;
 }
 

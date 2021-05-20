@@ -144,7 +144,6 @@ export default {
 }
 
 .modal__close {
-  cursor: pointer;
   font-size: 64px;
   padding-top: 0;
   float: right;

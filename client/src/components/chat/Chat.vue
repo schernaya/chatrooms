@@ -23,7 +23,6 @@
               >
               <div class="fader fader-left"></div>
               <div class="fader fader-right"></div>
-              <!-- <div class="chat_title">{{ room_name }}</div> -->
             </div>
             <form class="left_form" @submit.prevent="LeftRoom">
               <input class="left_btn btn" type="submit" value="Left room" />
@@ -63,10 +62,10 @@
 </template>
 
 <script>
-import Header from "./Header.vue";
+import Header from "../Header.vue";
 import Messages from "./Messages.vue";
-import ChatData from "./ChatData.vue";
-import RenameRoomModal from "./RenameRoomModal.vue";
+import ChatData from "./chat-details/ChatData.vue";
+import RenameRoomModal from "../modals/RenameRoomModal.vue";
 
 import {
   USER_INFO,
@@ -76,7 +75,6 @@ import {
   SUB_MEMBER_LEFT,
   DELETE_ROOM,
   SUB_ROOM_UPDATED,
-  SUB_ROOM_DELETED,
   SUB_ROOM_CREATED,
 } from "@/graphql/graphql.js";
 
@@ -84,7 +82,6 @@ export default {
   name: "Chats",
   data() {
     return {
-      //   search: "",
       room_name: "",
       messages: [],
       members: [],
@@ -103,7 +100,6 @@ export default {
     Messages,
     ChatData,
     RenameRoomModal,
-    // ChatElement,
   },
   async created() {
     const me = await this.$apollo.query({
