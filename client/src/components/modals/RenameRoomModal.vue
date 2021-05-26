@@ -138,15 +138,12 @@ export default {
 }
 
 .modal__title {
-  /* padding: 35px 140px 10px 35px; */
   padding-left: 35px;
   padding-top: 30px;
   padding-right: 90px;
-  /* padding-bottom: 35px; */
 }
 
 .modal__close {
-  cursor: pointer;
   font-size: 64px;
   padding-top: 0;
   float: right;

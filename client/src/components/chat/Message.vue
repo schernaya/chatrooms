@@ -25,32 +25,33 @@ export default {
 </script>
 
 <style scoped>
-.author {
+.author,
+.name-time-message__block,
+.name-time__block, 
+.author__logo {
   display: flex;
 }
 
 .name-time-message__block {
-  display: flex;
   width: 88%;
   margin-right: auto;
   position: relative;
 }
 
+.name-time__block, .text {
+  width: 100%;
+  position: absolute;
+}
+
 .name-time__block {
   margin-right: auto;
-  width: 100%;
-  display: flex;
-  position: absolute;
   margin-left: 5px;
-  /* border: 2px solid rgb(196, 73, 73); */
 }
 
 .text {
   font-size: 22px;
   margin-left: 18px;
   margin-top: 40px;
-  width: 100%;
-  position: absolute;
 }
 
 .author__name,
@@ -85,7 +86,6 @@ export default {
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  display: flex;
 }
 
 .message {

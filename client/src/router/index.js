@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Registration from '../components/Registration.vue'
 import Chats from '../components/Chats.vue'
-import Chat from '../components/Chat.vue'
+import Chat from '../components/chat/Chat.vue'
 
 Vue.use(VueRouter)
 
